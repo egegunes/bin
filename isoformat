@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import datetime
+import sys
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        arg = sys.stdin.read().strip()
+    else:
+        arg = sys.argv[2]
+
+    fmt = sys.argv[1]
+
+    try:
+        dt = datetime.datetime.strptime(arg, fmt)
+        print(dt.isoformat())
+    except Exception as e:
+        print("error: {}".format(e), file=sys.stderr)
+        sys.exit(1)

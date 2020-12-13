@@ -1,0 +1,32 @@
+#!/bin/bash
+
+INBOXDIR=/home/egegunes/var/INBOX
+
+if [ "$PWD" != "$INBOXDIR" ]; then
+    cd $INBOXDIR
+fi
+
+for m in *.md; do
+    echo $m
+    cat $m
+    echo "(s)kip, (c)opy to clipboard, create (z)ettel"
+    read char
+
+    case $char in
+        "s")
+            mv $m $m.processed.md
+            continue
+            ;;
+        "c")
+            xclip -i -sel clip < $m
+            mv $m $m.processed.md
+            ;;
+        "z")
+            zk new $m
+            mv $m $m.processed.md
+            ;;
+        *)
+            continue
+            ;;
+    esac
+done

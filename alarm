@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+
+import subprocess
+
+import feedparser
+
+
+if __name__ == "__main__":
+    feed = feedparser.parse("https://podcasts.files.bbci.co.uk/p02nq0gn.rss")
+    latest = feed["entries"][0]
+
+    subprocess.call(["mplayer", latest["links"][0]["href"]])
