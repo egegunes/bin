@@ -1,0 +1,10 @@
+#!/bin/bash
+
+out=$(exec "$@")
+
+xclip -i -sel clip <<EOF
+$ $@
+$out
+EOF
+
+echo $out
