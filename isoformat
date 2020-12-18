@@ -1,19 +1,34 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
+import argparse
 import datetime
 import sys
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        arg = sys.stdin.read().strip()
-    else:
-        arg = sys.argv[2]
+    parser = argparse.ArgumentParser(description="Format datetime as ISO 8601")
+    parser.add_argument(
+        "format", type=str, help="datetime format of input",
+    )
+    parser.add_argument(
+        "offset",
+        type=str,
+        nargs="?",
+        default="+0000",
+        help="offset to include, default +0000",
+    )
+    parser.add_argument(
+        "datetime", type=str, nargs="?", help="datetime to format",
+    )
 
-    fmt = sys.argv[1]
+    args = parser.parse_args()
+
+    if args.datetime is None:
+        args.datetime = sys.stdin.read().strip()
 
     try:
-        dt = datetime.datetime.strptime(arg, fmt)
-        print(dt.isoformat())
+        tz = datetime.datetime.strptime(args.offset, "%z").tzinfo
+        dt = datetime.datetime.strptime(args.datetime, args.format).astimezone(tz=tz)
+        print(dt.isoformat(timespec="milliseconds"))
     except Exception as e:
         print("error: {}".format(e), file=sys.stderr)
         sys.exit(1)
