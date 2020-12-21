@@ -1,0 +1,3 @@
+#!/bin/bash
+
+vim +"set nonumber" +"set norelativenumber" $HOME/var/notes/$(date +%Y-%m-%d).txt
