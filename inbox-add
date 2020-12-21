@@ -1,9 +1,7 @@
 #!/bin/bash
 
 INBOX_PATH=$HOME/var/INBOX
-CONFIG_PATH=$HOME/.inbox.yml
-TERMINAL=alacritty
-TERMINALOPTS="--config-file $CONFIG_PATH --command"
+EDITOR=/usr/bin/vim
 
 function commit {
     local mode=$1
@@ -13,7 +11,7 @@ function commit {
 
     git pull
     git add $file
-    git commit -m "$mode $file from $HOSTNAME" &>/dev/null
+    git commit -m "$mode $file from $HOSTNAME"
     git push
 
     cd - &>/dev/null
@@ -32,21 +30,7 @@ function run_editor {
     fi
 
     cp $tmpfile "$INBOX_PATH/$filename"
-    commit "add" "$filename" &> /dev/null &
+    commit "add" "$filename"
 }
 
-function open_terminal {
-    $TERMINAL $TERMINALOPTS bash -c '$HOME/bin/inbox.sh editor'
-}
-
-function main {
-    if [[ $1 == "terminal" ]]; then
-        open_terminal
-    elif [[ $1 == "editor" ]]; then
-        run_editor
-    else
-        open_terminal
-    fi
-}
-
-main $1
+run_editor
