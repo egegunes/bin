@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat $HOME/var/log/bash-history-* | cut -d ' ' -f7- | sort | uniq | fzf
