@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# credit: https://git.sr.ht/~alexdavid
+
+REPO="$1"
+[ -z "$REPO" ] && exit 1
+
+DIR=$(mktemp -d)
+git clone --depth 1 "$REPO" "$DIR"
+
+pushd "$DIR"
+vim $DIR"
+popd
+
+rm -rf "$DIR"
