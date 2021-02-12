@@ -1,3 +1,8 @@
 #!/bin/bash
 
-vim +"set nonumber" +"set norelativenumber" $HOME/var/notes/$(date +%Y-%m-%d).txt
+t=$1
+if [[ -z $t ]]; then
+    t="today"
+fi
+
+vim +"set nonumber" +"set norelativenumber" $HOME/var/notes/$(date -d "$t" +%Y-%m-%d).txt
