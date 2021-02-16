@@ -9,7 +9,7 @@ DIR=$(mktemp -d)
 git clone --depth 1 "$REPO" "$DIR"
 
 pushd "$DIR"
-vim $DIR"
+vim "$DIR"
 popd
 
 rm -rf "$DIR"
