@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+main() {
+    local ext=$1
+    local dir=$(mktemp -d)
+    local file="${dir}/$(date +%s).${ext}"
+
+    echo "${file}"
+    vim "${file}"
+
+    # To not delete the directory, quit vim with :cq
+    rm -rf "${dir}"
+}
+
+main "${@}"
