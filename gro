@@ -1,6 +1,6 @@
 #!/bin/bash
 
-f=$(grep -rn -I ${@} . | fzf | cut -d ':' -f1,2 | sed 's/:/ +/')
+f=$(grep -rn -I ${@} | fzf | cut -d ':' -f1,2 | sed 's/:/ +/')
 
 if [[ -z ${f} ]]; then
     exit 0

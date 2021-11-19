@@ -1,4 +1,6 @@
 #!/bin/bash
 
-osascript -e "display notification \"$*\" with title \"Terminal\" sound name \"Glass\"" || :
+if command -v osascript; then
+    osascript -e "display notification \"$*\" with title \"Terminal\" sound name \"Glass\""
+fi
 tmux display-message "$*"
