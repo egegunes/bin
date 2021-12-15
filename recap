@@ -1,0 +1,36 @@
+#!/bin/bash
+
+main() {
+    case $1 in
+    "add")
+        echo ">> Ctrl-D to finish"
+        echo "$(</dev/stdin)" >> "${RECAP_LIST}"
+    ;;
+    "random")
+        shuf "${RECAP_LIST}" | head -n 1
+    ;;
+    "list")
+        sort -u "${RECAP_LIST}" | sed '/^$/d'
+    ;;
+    "search")
+        local line=$(recap list | fzf)
+    ;;
+    "log")
+        local line=$(recap list | fzf)
+        if [[ "${line}" =~ \.$ ]]; then
+            sed -e "s/$line/$line./g" -i "${RECAP_LIST}"
+        else
+            sed -e "s/$line/$line ./g" -i "${RECAP_LIST}"
+        fi
+    ;;
+    *)
+        echo "Invalid command: $1"
+    esac
+}
+
+if [ -z "${RECAP_LIST}" ]; then
+    echo "Set RECAP_LIST environment variable"
+    exit 1
+fi
+
+main "$@"
